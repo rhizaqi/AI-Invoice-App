@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import LandingPage from "./pages/LandingPage/LandingPage";
+import Signup from "./pages/auth/Signup";
+import Login from "./pages/auth/Login";
+import InvoiceDetail from "./pages/Invoice/InvoiceDetail";
+import Dashboard from "./pages/dashboard/Dashboard";
+import AllInvoice from "./pages/Invoice/AllInvoice";
+import CreateInvoice from "./pages/Invoice/CreateInvoice";
+import ProfilePage from "./pages/Profile/ProfilePage";
+import ProtectedRoute from "./components/Auth/ProtectedRoute";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <Router>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="login" element={<Login />} />
 
-export default App
+          {/* Protected Routes */}
+          <Route path="/" element={<ProtectedRoute />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="invoices" element={<AllInvoice />} />
+            <Route path="invoices/new" element={<CreateInvoice />} />
+            <Route path="invoices/:id" element={<InvoiceDetail />} />
+            <Route path="profile" element={<ProfilePage />} />
+          </Route>
+
+          {/* Call all Route */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
+
+      <Toaster
+        toastOptions={{
+          className: "",
+          style: {
+            fontSize: "13px",
+          },
+        }}
+      />
+    </div>
+  );
+}
