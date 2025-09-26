@@ -1,7 +1,9 @@
+import Header from "../../components/Landing/Header";
+
 export default function LandingPage() {
   return (
-    <div>
-      <div>LandingPage</div>
+    <div className="bg-[#ffffff] text-gray-600">
+      <Header />
     </div>
   );
 }

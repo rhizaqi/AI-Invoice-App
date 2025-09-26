@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
+import DashboardLayout from "../Layout/DashboardLayout";
 
 export default function ProtectedRoute({ children }) {
-  // Will integrate these
+  // Will integrate these values later
   const isAuthenticated = true;
   const loading = false;
 
@@ -16,7 +17,7 @@ export default function ProtectedRoute({ children }) {
 
   return (
     <div>
-      <div>ProtectedRoute</div>
+      <DashboardLayout>{children ? children : <Outlet />}</DashboardLayout>
     </div>
   );
 }
