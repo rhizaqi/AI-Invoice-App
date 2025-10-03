@@ -10,7 +10,7 @@ export default function Header() {
   const [profileDropDown, setProfileDropDown] = useState(false);
   const navigate = useNavigate();
 
-  const isAuthenticated = true;
+  const isAuthenticated = false;
   const user = {
     name: "Ocky",
     email: "ockytumocky@gmail.com",
