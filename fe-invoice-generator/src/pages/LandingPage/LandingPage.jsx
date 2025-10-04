@@ -1,3 +1,4 @@
+import Faqs from "../../components/Landing/Faqs";
 import Features from "../../components/Landing/Features";
 import Header from "../../components/Landing/Header";
 import Hero from "../../components/Landing/Hero";
@@ -11,7 +12,8 @@ export default function LandingPage() {
       <main className="mb-[96]">
         <Hero />
         <Features />
-        <Testimonial/>
+        <Testimonial />
+        <Faqs />
       </main>
     </div>
   );
