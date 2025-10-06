@@ -17,7 +17,7 @@ export default function Testimonial() {
           {TESTIMONIALS.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-gray-50 rounded-2xl p-8 shadow-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 relative"
+              className="bg-gray-50 rounded-2xl p-8 shadow-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 relative hover:scale-101"
             >
               <div className="absolute -top-4 left-8 w-8 h-8 bg-gradient-to-br from-blue-950 to-blue-900 rounded-full flex items-center justify-center text-white">
                 <Quote className="w-5 h-5" />
