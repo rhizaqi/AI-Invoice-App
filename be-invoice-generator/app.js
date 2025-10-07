@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes")
 
 const app = express();
 
@@ -22,6 +23,7 @@ connectDB();
 app.use(express.json());
 
 // Routes here
+app.use("api/auth", authRoutes)
 
 // App start here
 const PORT = process.env.PORT || 5000;
