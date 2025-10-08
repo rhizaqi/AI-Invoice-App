@@ -23,7 +23,7 @@ connectDB();
 app.use(express.json());
 
 // Routes here
-app.use("api/auth", authRoutes)
+app.use("/api/auth", authRoutes)
 
 // App start here
 const PORT = process.env.PORT || 5000;
