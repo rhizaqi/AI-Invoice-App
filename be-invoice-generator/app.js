@@ -3,7 +3,9 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const connectDB = require("./config/db");
-const authRoutes = require("./routes/authRoutes")
+
+const authRoutes = require("./routes/authRoutes");
+const invoiceRoutes = require("./routes/invoiceRoutes");
 
 const app = express();
 
@@ -23,7 +25,8 @@ connectDB();
 app.use(express.json());
 
 // Routes here
-app.use("/api/auth", authRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/invoices", invoiceRoutes);
 
 // App start here
 const PORT = process.env.PORT || 5000;
