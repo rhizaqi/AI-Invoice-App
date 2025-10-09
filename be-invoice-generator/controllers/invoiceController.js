@@ -24,7 +24,6 @@ exports.createInvoice = async (req, res) => {
 
     items.forEach((el) => {
       console.log(el, 99999999);
-
       subtotal += el.unitPrice * el.quantity;
       taxTotal += (el.unitPrice * el.quantity * (el.taxPercent || 0)) / 100;
     });
@@ -67,9 +66,11 @@ exports.createInvoice = async (req, res) => {
 //@access   Private
 exports.getInvoices = async (req, res) => {
   try {
+    const invoice = await Invoice.find().populate("user", "name email");
+    res.status(200).json(invoice);
   } catch (error) {
     res.status(500).json({
-      message: "Error creating invoice",
+      message: "Error get invoices",
       error: error.message,
     });
   }
@@ -80,9 +81,19 @@ exports.getInvoices = async (req, res) => {
 //@access   Private
 exports.getInvoiceById = async (req, res) => {
   try {
+    const invoice = await Invoice.findById(req.params.id).populate(
+      "user",
+      "name email"
+    );
+
+    if (!invoice) {
+      res.status(404).json({ message: "Invoice not found!" });
+    }
+
+    res.status(200).json(invoice);
   } catch (error) {
     res.status(500).json({
-      message: "Error creating invoice",
+      message: "Error get invoice data",
       error: error.message,
     });
   }
@@ -93,9 +104,54 @@ exports.getInvoiceById = async (req, res) => {
 //@access   Private
 exports.updateInvoice = async (req, res) => {
   try {
+    const {
+      invoiceNumber,
+      invoiceDate,
+      dueDate,
+      billFrom,
+      billTo,
+      items,
+      notes,
+      paymentTerms,
+      status,
+    } = req.body;
+
+    let subtotal = 0;
+    let taxTotal = 0;
+
+    if (items && items.length > 0) {
+      items.forEach((el) => {
+        subtotal += el.unitPrice * quantity;
+        taxTotal += (el.unitPrice * quantity * (items.taxPercent || 0)) / 100;
+      });
+    }
+
+    const total = subtotal + taxTotal;
+
+    const updateInvoice = await Invoice.findByIdAndUpdate(
+      req.params.id,
+      {
+        invoiceNumber,
+        invoiceDate,
+        dueDate,
+        billFrom,
+        billTo,
+        items,
+        notes,
+        paymentTerms,
+        subtotal,
+        taxTotal,
+        total,
+      },
+      { new: true }
+    );
+
+    if (!updateInvoice)
+      return res.status(404).json({ message: "Invoice not found!" });
+    res.status(201).json(updateInvoice);
   } catch (error) {
     res.status(500).json({
-      message: "Error creating invoice",
+      message: "Error update invoice",
       error: error.message,
     });
   }
@@ -108,7 +164,7 @@ exports.deleteInvoice = async (req, res) => {
   try {
   } catch (error) {
     res.status(500).json({
-      message: "Error creating invoice",
+      message: "Error delete invoice",
       error: error.message,
     });
   }
